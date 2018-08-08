@@ -1,28 +1,24 @@
 package com.boscha.micka.cameraapplication.Entities;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by micka on 8/8/2018.
  */
 
 public class User {
 
-    private String name;
-    private String password;
+    @SerializedName("user")
+    @Expose
+    private String user;
 
-    public String getPassword() {
-        return password;
+    public String getUser() {
+        return user;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(String user) {
+        this.user = user;
     }
 
 

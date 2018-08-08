@@ -40,7 +40,12 @@ public class MainActivity extends AppCompatActivity {
     ServerApi serverApi;
     Subscription subscription;
 
-    ServerApi test2;
+    List<Camera> cameraList;
+
+    public void setCameraList(List<Camera> cameraList) {
+        this.cameraList = cameraList;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,25 +54,39 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         serverApi = ApiUtils.getAPIService();
-        User user = new User();
-        user.setName("iport");
-        user.setPassword("iport");
 
-       /* serverApi.getMonitors("iport")
+        User user = new User();
+        user.setUser("iport");
+
+        serverApi.getMonitors(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cameras -> showResponce(cameras),
-                        throwable -> {});*/
+                .subscribe(
+                        cameras -> cameraList = cameras,
+                        throwable -> {},
+                        ()->showResponce(cameraList)
+                        );
 
-         subscription = serverApi.getImageByCameraUrl()
+
+
+         imageView.setOnLongClickListener(l->{
+             subscription.unsubscribe();
+             return true;
+         });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        /*Log.i("@@@SIZE", String.valueOf(cameraList.size()));
+        subscription = serverApi.getImageByCameraUrl(cameraList.get(0).getZmUrl(),cameraList.get(0).getId())
                 .subscribeOn(Schedulers.io())
                 .delay(1, TimeUnit.SECONDS)
                 .repeat()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(body -> downloadImage(body),
-                        throwable -> throwable.printStackTrace());
-
-
+                        throwable -> throwable.printStackTrace());*/
 
     }
 
@@ -76,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private void showResponce(List<Camera> cameras){
         for(Camera camera:cameras)
            Log.i("@@@CAMERA",camera.toString());
+
     }
 
 

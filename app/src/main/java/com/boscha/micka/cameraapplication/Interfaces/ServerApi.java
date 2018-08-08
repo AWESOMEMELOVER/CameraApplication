@@ -27,11 +27,13 @@ import rx.Observable;
  */
 
 public interface ServerApi {
-    @FormUrlEncoded
-    @POST("/rest/getMonitors")
-    Observable<List<Camera>> getMonitors(@Field("user") String user);
 
-    @GET("/zm/cgi-bin/nph-zms?mode=single&scale=100&maxfps=5&buffer=1000&monitor=28&user=iport&connkey=602221&rand=1511870800")
-    Observable<ResponseBody> getImageByCameraUrl();
+    @POST("/rest/getMonitors")
+    Observable<List<Camera>> getMonitors(@Body User user);
+
+
+    @GET("{url}zm/cgi-bin/nph-zms?mode=single&scale=100&maxfps=5&buffer=1000&monitor={id}&user=iport&connkey=602221&rand=1511870800")
+    Observable<ResponseBody> getImageByCameraUrl(@Path("url") String url,
+                                                 @Path("id") Integer id);
 
 }
