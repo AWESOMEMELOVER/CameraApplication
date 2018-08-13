@@ -32,7 +32,11 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'com.jakewharton:butterknife:8.6.0'
+    implementation 'com.synnapps:carouselview:0.1.5'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'

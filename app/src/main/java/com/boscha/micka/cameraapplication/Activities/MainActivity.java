@@ -15,6 +15,8 @@ import com.boscha.micka.cameraapplication.Instances.RetrofitClient;
 import com.boscha.micka.cameraapplication.Interfaces.ServerApi;
 import com.boscha.micka.cameraapplication.NetworkUtils.ApiUtils;
 import com.boscha.micka.cameraapplication.R;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.synnapps.carouselview.CarouselView;
 
 
 import java.io.FileOutputStream;
@@ -34,8 +36,8 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.tv_test)
-    ImageView imageView;
+    @BindView(R.id.cv_carousel)
+    CarouselView carouselView;
 
     ServerApi serverApi;
     Subscription subscription;
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         User user = new User();
         user.setUser("iport");
 
+
+
         serverApi.getMonitors(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -65,20 +69,18 @@ public class MainActivity extends AppCompatActivity {
                         cameras -> cameraList = cameras,
                         throwable -> {},
                         ()->showResponce(cameraList)
-                        );
+                );
+       // Subscription subscription = RxView.clicks(carouselView).subscribe();
 
 
 
-         imageView.setOnLongClickListener(l->{
-             subscription.unsubscribe();
-             return true;
-         });
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         /*Log.i("@@@SIZE", String.valueOf(cameraList.size()));
         subscription = serverApi.getImageByCameraUrl(cameraList.get(0).getZmUrl(),cameraList.get(0).getId())
                 .subscribeOn(Schedulers.io())
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void downloadImage(ResponseBody body){
+    private void downloadImage(ResponseBody body,ImageView imageView){
         try {
             Log.d("DownloadImage", "Reading and writing file");
             InputStream in = body.byteStream();

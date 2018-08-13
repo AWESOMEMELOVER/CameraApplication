@@ -9,10 +9,12 @@
 
 
 
-    <ImageView
-        android:id="@+id/tv_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+   <com.synnapps.carouselview.CarouselView
+       android:id="@+id/cv_carousel"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+
+   </com.synnapps.carouselview.CarouselView>
 
 
 </LinearLayout>
