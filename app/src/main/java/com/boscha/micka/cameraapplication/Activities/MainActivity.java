@@ -105,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
                         cameras -> cameraList = cameras,
                         throwable -> {},
                         ()->{
-
+                            showResponce(cameraList);
                             carouselView.setImageListener((position, imageView) -> {
-                                monitorsApi = MonitorsUtils.getAPIService(cameraList.get(position).getZmUrl());
+                                monitorsApi = RetrofitClient.getClient("http://91.226.253.10:20080/").create(MonitorsApi.class);
+
                                 monitorsApi.getImageByCameraUrl(cameraList.get(position).getId())
                                         .subscribeOn(Schedulers.io())
                                         .delay(1,TimeUnit.SECONDS)
